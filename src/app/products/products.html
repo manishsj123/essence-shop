@@ -1,0 +1,74 @@
+<div class="container py-3">
+
+  <div class="row mb-3">
+    <div class="col-12">
+      <input class="form-control form-control-lg" placeholder="Search products..." [formControl]="searchControl" />
+    </div>
+  </div>
+
+  <div class="list-group overflow-auto border rounded p-2" style="height: 70vh;" (scroll)="onScroll($event)">
+
+    <div class="card mb-3 shadow-sm" *ngFor="let p of products.state().items">
+
+      <div *ngIf="editingId() !== p.id" class="card-body">
+
+        <div class="d-flex">
+          <img [src]="p.thumbnail" class="rounded" style="width: 120px; height: 120px; object-fit: cover; margin-right: 16px;"/>
+
+          <div class="flex-grow-1">
+            <h5 class="card-title">{{ p.title }}</h5>
+            <p class="card-text text-muted">{{ p.brand }} - {{ p.category }}</p>
+
+            <p class="card-text mb-1">
+              <strong>Price:</strong> ${{ p.price }}
+            </p>
+
+            <p class="card-text">
+              <strong>Stock:</strong> {{ p.stock }}
+            </p>
+
+            <button class="btn btn-primary btn-sm" (click)="startEdit(p)">
+              Edit
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <div *ngIf="editingId() === p.id" class="card-body" [formGroup]="editForm">
+
+        <div class="row g-2">
+          <div class="col-md-4">
+            <label class="form-label">Title</label>
+            <input class="form-control" formControlName="title" />
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">Price</label>
+            <input type="number" class="form-control" formControlName="price" />
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">Stock</label>
+            <input type="number" class="form-control" formControlName="stock" />
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <button class="btn btn-success btn-sm me-2" (click)="save(p)">
+            Save
+          </button>
+          <button class="btn btn-secondary btn-sm" (click)="cancel()">
+            Cancel
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="text-center py-3" *ngIf="products.state().loading">
+      <div class="spinner-border text-primary"></div>
+    </div>
+
+  </div>
+</div>
