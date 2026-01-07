@@ -1,0 +1,42 @@
+.plp-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 18px;
+}
+
+.filters {
+  background: #fff;
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 0 4px 18px rgba(0,0,0,.05);
+}
+
+.grid {
+  padding: 6px;
+}
+
+.product-card {
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform .15s ease, box-shadow .15s;
+}
+
+.product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(0,0,0,.12);
+}
+
+.product-card img {
+  height: 160px;
+  object-fit: cover;
+}
+
+.product-card .title {
+  font-size: .9rem;
+  min-height: 36px;
+}
+
+.product-card .price {
+  font-weight: 700;
+  margin: 4px 0;
+}

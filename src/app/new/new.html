@@ -1,0 +1,76 @@
+<div class="plp-layout container-fluid">
+  <aside class="filters">
+    <h6 class="mb-2 fw-bold">Search</h6>
+    <input
+      class="form-control mb-3"
+      [value]="ui().search"
+      (input)="onSearch($any($event.target).value)"
+      placeholder="Search products..."
+    />
+
+    <h6 class="fw-bold mt-3">Brand</h6>
+    <div *ngFor="let b of ['Apple','Samsung','OPPO','Huawei','Infinix']">
+      <label class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          [checked]="ui().brands.includes(b)"
+          (change)="toggleBrand(b)"
+        />
+        <span class="form-check-label">{{ b }}</span>
+      </label>
+    </div>
+
+    <h6 class="fw-bold mt-3">Stock</h6>
+    <label class="form-check">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        [checked]="ui().inStock"
+        (change)="toggleStock($event)"
+      />
+      <span class="form-check-label">In stock only</span>
+    </label>
+
+    <h6 class="fw-bold mt-3">Sort</h6>
+    <select
+      class="form-select"
+      [value]="ui().sort"
+      (change)="changeSort($any($event.target).value)"
+    >
+      <option value="lh">Price: Low → High</option>
+      <option value="hl">Price: High → Low</option>
+      <option value="new">Newest</option>
+    </select>
+  </aside>
+
+  <section class="grid">
+    <div class="row g-3">
+      <div class="col-md-3" *ngFor="let p of productList()">
+        <div class="card product-card">
+          <img [src]="p.thumbnail" class="card-img-top" />
+          <div class="card-body">
+            <h6 class="title">{{ p.title }}</h6>
+            <p class="price">₹ {{ p.price }}</p>
+            <span class="badge bg-success" *ngIf="p.stock > 0">In stock</span>
+            <span class="badge bg-danger" *ngIf="p.stock === 0"
+              >Out of stock</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="mt-4" *ngIf="totalPages() > 1">
+      <ul class="pagination">
+        <li
+          class="page-item"
+          *ngFor="let p of [].constructor(totalPages()); let i = index"
+          [class.active]="i+1 === currentPage()"
+        >
+          <a class="page-link" (click)="changePage(i+1)"> {{ i+1 }} </a>
+        </li>
+      </ul>
+    </nav>
+  </section>
+</div>
